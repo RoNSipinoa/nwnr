@@ -1,0 +1,24 @@
+1. combineVS, combineVPS, combineVSP, combineVPSP 전부 만들기
+    - 장점: quirky해짐
+    - 단점: 일반적인 언어와 이질감이 커짐
+
+2. Mod를 Functor로 만들기
+    - 장점: context를 명시한다는 Functor의 특성을 최대한 활용 가능
+    - 단점: combineVModS 등도 전부 만들지 않으면 해결 힘듦. 이는 이후 고려
+
+3. PhraseAddVerb 등의 constructor 단순화를 위하여 Phrase a를 Phrase a b로 만들기 (기각)
+    - 장점: 단순화 가능
+    - 단점: Phrase에 대한 계산 커짐. 아마 Phrase를 2개 이상 만들어야 할지도?(Pure Phrase, Mixed Phrase)
+    - 기각 사유: Phrase에 2개 이상의 요소 추가 시 b는 무엇이 되어야 하는가? 대답 불가. Functor화도 당연히 불가. 따라서 기각.
+
+4. Affix를 Mod와 합치기
+    - 장점: Affix는 Noun에 붙는 접사, 따라서 Mod와 역할 겹침
+    - 단점: Noun을 Modify한다는 Mod와 아예 특성을 바꾸는 Affix의 역할이 완전히 같은가?
+
+5. 재귀대명사를 Function의 Applicative 인스턴스를 활용하여 구현하기.
+    - 장점: 좀 더 직관적인 함수 적용으로 구현 가능.
+    - 단점: 하스켈에서는 똑같이 인식됨. 하스켈에서 다르지 않다면 뜻은 똑같지 않은가?
+
+6. Noun과 Verb, Mod를 모두 똑같은 Word로 감싸기
+    - 장점: PhraseAdd~ 단순화 가능, 따라서 단어 정의 더 적어짐
+    - 단점: NP, VP, ModP 구분 불가(data Phrase = Phrase Word)
