@@ -69,4 +69,11 @@ I wanted to analyze my language very regularly so that I can integrate some "spe
 </details>
 Adverbial conjunctions can be interpreted as modifying a sentence and modify that modified sentence into main sentence. In the coordinating conjunction, however, things can get little tricky.
 I preferred to treat them like other adverbial conjuctions, but chances are that you might like adding `Join Phrase Phrase` in the data constructor of Phrase, which can act like a coordinating conjuction.
+  
 This is the end of current roadmap. I will nourish this whenever I need to!
+  
+Copyright ©2021 RoNSipinoa. All Rights Reserved.  
+CC-BY-NC-SA 2.0 KR  
+Contact:  
+  E-mail: whsoh@naver.com  
+  Discord: RoNSipinoa#2253  
