@@ -1,7 +1,5 @@
 # Haskell Conlang Project 
 ### The Integration between Haskell and Constructed Language
-
-
 ```
  ,ggg,        gg                                                                    ,gggg,                                                                          
 dP""Y8b       88                        ,dPYb,              ,dPYb, ,dPYb,         ,88"""Y8b,                            ,dPYb,                                      
@@ -20,19 +18,55 @@ Yb, `88       88                        IP'`Yb              IP'`Yb IP'`Yb       
                                                                                                                                                             `8, ,8I 
                                                                                                                                                              `Y8P"  
 ```
-This project is designed to make a constructed language, logical language in particular, from Haskell. 
-I was influenced by Korean(my mother tongue), English, Indonesian, Swahili, and some other constructed languages like lojban, toki pona, etc.
-
+This project intends to make a constructed language, logical language in particular, from Haskell. 
+Languages considered in this project include Korean(my mother tongue), English, Indonesian, Swahili, and other constructed languages like Lojban, Toki pona, etc.
 
 ## Plan for the Code
-This project is planned to take 3 steps in total.
+This project is going to take three steps in total.
 
 1. Make a syntax to represent the language structure  
-↳ This is the current stage now(2021-10-09). After working on it, I found I need only three parts of speech -- Noun, Verb, and Modifier(or Mod).
+↳ Current stage now(2021-10-09). 
 2. Make my syntax more Haskell-ish  
-↳ Includes using Functors, Monads, etc. I think if I want to integrate the specific "Haskell" with constructed languages, there should exist a certain distinct feature that only Haskell can do.
-I'm not creating a regular language parsing program, so I need some ... quirks.
+↳ Includes using Functors, Monads, etc. In my opinion, if I want to integrate the specific "Haskell" with constructed languages, there should exist a certain distinct feature that only Haskell can do.
+I'm not creating a regular language parsing program, so I need some quirks, I guess.
 3. Make a language parser and establish the structure of conlang completely  
-↳ I will implement it using a tree structure. Thus, my final program will be able to parse a file input containing my conlang, and show it in an interpreted manner.
+↳ I will implement it using a tree structure. Thus, my final project result will parse a file input containing my conlang and show it in an interpreted manner.
 
 ## Plan for the Language
+The main structure for the language is VOS. This structure is somehow unnatural but is heavily influenced by Haskell's `const` function and `First` and `Const` monoids. They have the attribute of keeping the first argument given to them, and I thought this should be the prominent feature in my language.  
+Also, after working on my project, I found that I needed only three parts of speech(POS) -- Noun, Verb, and Modifier(or Mod). This might seem minimalistic to other language critics.
+As I considered Toki pona in this constructed language, the assessment sounds convincing. However, this is not the direct result of minimalism. 
+I wanted to analyze my language very regularly so that I can integrate some "special" features in natural languages into one. And the result was those cute three parts of speech!
+<details>
+ <summary>Detailed comparison</summary>
+ <br>For eight POSs of English:<br><br>
+<table>
+<thead>
+  <tr>
+    <th>Traditional POS</th>
+    <th>Corresponding POS</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Noun, Pronoun</td>
+    <td>Noun</td>
+  </tr>
+  <tr>
+    <td>Verb</td>
+    <td>Verb</td>
+  </tr>
+  <tr>
+    <td>Adverb, Adjective, Preposition, Conjunction, Article</td>
+    <td>Mod</td>
+  </tr>
+  <tr>
+    <td>Interjection</td>
+    <td>Combination of Noun and Verb</td>
+  </tr>
+</tbody>
+</table>
+</details>
+Adverbial conjunctions can be interpreted as modifying a sentence and modify that modified sentence into main sentence. In the coordinating conjunction, however, things can get little tricky.
+I preferred to treat them like other adverbial conjuctions, but chances are that you might like adding `Join Phrase Phrase` in the data constructor of Phrase, which can act like a coordinating conjuction.
+This is the end of current roadmap. I will nourish this whenever I need to!
