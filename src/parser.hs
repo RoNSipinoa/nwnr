@@ -1,5 +1,7 @@
 import Text.Printf ( printf )
+import Prelude hiding (mod)
 import Word.Base
+import Word.Lexicon
 
 data Tree a = Branch String (Tree a) (Tree a) | Leaf a
 

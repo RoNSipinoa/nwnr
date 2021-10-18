@@ -1,5 +1,7 @@
 module Word.Base where
 
+import Prelude hiding (mod)
+
 {- The Noun type refers to nouns, pronouns, and numerals.
 The result of conversion from clause to Noun can also be Noun.
 
@@ -37,19 +39,126 @@ data Phrase
 
 -- Aliases
 
-infixr 5 +!+
-infixr 4 +++
+infixr 1 +>
+infixr 2 +>>
+infixr 3 +>>>
+infixr 4 +>>>>
+infixr 5 +>>>>>
+infixr 6 +>>>>>>
+infixr 7 +>>>>>>>
+infixr 8 +>>>>>>>>
+infixr 9 +>>>>>>>>>
+infixl 1 <+
+infixl 2 <<+
+infixl 3 <<<+
+infixl 4 <<<<+
+infixl 5 <<<<<+
+infixl 6 <<<<<<+
+infixl 7 <<<<<<<+
+infixl 8 <<<<<<<<+
+infixl 9 <<<<<<<<<+
+infixr 1 <+>
+infixr 2 <+>>
+infixr 3 <+>>>
+infixr 4 <+>>>>
+infixr 5 <+>>>>>
+infixr 6 <+>>>>>>
+infixr 7 <+>>>>>>>
+infixr 8 <+>>>>>>>>
+infixr 9 <+>>>>>>>>>
+infixl 2 <<+>
+infixl 3 <<<+>
+infixl 4 <<<<+>
+infixl 5 <<<<<+>
+infixl 6 <<<<<<+>
+infixl 7 <<<<<<<+>
+infixl 8 <<<<<<<<+>
+infixl 9 <<<<<<<<<+>
 
-(+!+) :: Phrase -> Phrase -> Phrase
-(+!+) = Add
+(+>) :: Phrase -> Phrase -> Phrase
+(+>) = Add
+(+>>) :: Phrase -> Phrase -> Phrase
+(+>>) = Add
+(+>>>) :: Phrase -> Phrase -> Phrase
+(+>>>) = Add
+(+>>>>) :: Phrase -> Phrase -> Phrase
+(+>>>>) = Add
+(+>>>>>) :: Phrase -> Phrase -> Phrase
+(+>>>>>) = Add
+(+>>>>>>) :: Phrase -> Phrase -> Phrase
+(+>>>>>>) = Add
+(+>>>>>>>) :: Phrase -> Phrase -> Phrase
+(+>>>>>>>) = Add
+(+>>>>>>>>) :: Phrase -> Phrase -> Phrase
+(+>>>>>>>>) = Add
+(+>>>>>>>>>) :: Phrase -> Phrase -> Phrase
+(+>>>>>>>>>) = Add
 
-(+++) :: Phrase -> Phrase -> Phrase
-(+++) = Join
+(<+) :: Phrase -> Phrase -> Phrase
+(<+) = Add
+(<<+) :: Phrase -> Phrase -> Phrase
+(<<+) = Add
+(<<<+) :: Phrase -> Phrase -> Phrase
+(<<<+) = Add
+(<<<<+) :: Phrase -> Phrase -> Phrase
+(<<<<+) = Add
+(<<<<<+) :: Phrase -> Phrase -> Phrase
+(<<<<<+) = Add
+(<<<<<<+) :: Phrase -> Phrase -> Phrase
+(<<<<<<+) = Add
+(<<<<<<<+) :: Phrase -> Phrase -> Phrase
+(<<<<<<<+) = Add
+(<<<<<<<<+) :: Phrase -> Phrase -> Phrase
+(<<<<<<<<+) = Add
+(<<<<<<<<<+) :: Phrase -> Phrase -> Phrase
+(<<<<<<<<<+) = Add
 
+(<+>) :: Phrase -> Phrase -> Phrase
+(<+>) = Join
+(<+>>) :: Phrase -> Phrase -> Phrase
+(<+>>) = Join
+(<+>>>) :: Phrase -> Phrase -> Phrase
+(<+>>>) = Join
+(<+>>>>) :: Phrase -> Phrase -> Phrase
+(<+>>>>) = Join
+(<+>>>>>) :: Phrase -> Phrase -> Phrase
+(<+>>>>>) = Join
+(<+>>>>>>) :: Phrase -> Phrase -> Phrase
+(<+>>>>>>) = Join
+(<+>>>>>>>) :: Phrase -> Phrase -> Phrase
+(<+>>>>>>>) = Join
+(<+>>>>>>>>) :: Phrase -> Phrase -> Phrase
+(<+>>>>>>>>) = Join
+(<+>>>>>>>>>) :: Phrase -> Phrase -> Phrase
+(<+>>>>>>>>>) = Join
+
+(<<+>) :: Phrase -> Phrase -> Phrase
+(<<+>) = Join
+(<<<+>) :: Phrase -> Phrase -> Phrase
+(<<<+>) = Join
+(<<<<+>) :: Phrase -> Phrase -> Phrase
+(<<<<+>) = Join
+(<<<<<+>) :: Phrase -> Phrase -> Phrase
+(<<<<<+>) = Join
+(<<<<<<+>) :: Phrase -> Phrase -> Phrase
+(<<<<<<+>) = Join
+(<<<<<<<+>) :: Phrase -> Phrase -> Phrase
+(<<<<<<<+>) = Join
+(<<<<<<<<+>) :: Phrase -> Phrase -> Phrase
+(<<<<<<<<+>) = Join
+(<<<<<<<<<+>) :: Phrase -> Phrase -> Phrase
+(<<<<<<<<<+>) = Join
+
+noun :: String -> Phrase
 noun = NWord . Noun
+verb :: String -> Phrase
 verb = VWord . Verb
+mod :: String -> Phrase
 mod = MWord . Mod
 
+nconv :: String -> Phrase -> Phrase
 nconv x = NWord . NConvert x
+vconv :: String -> Phrase -> Phrase
 vconv x = VWord . VConvert x
+mconv :: String -> Phrase -> Phrase
 mconv x = MWord . MConvert x
