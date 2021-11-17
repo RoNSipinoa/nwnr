@@ -1,7 +1,5 @@
 module Word.Base where
 
-import Prelude hiding (mod)
-
 {- The Noun type refers to nouns, pronouns, and numerals.
 The result of conversion from clause to Noun can also be Noun.
 
@@ -10,18 +8,18 @@ Note that the adjective here is not that in English, but rather that in Korean. 
 I will refer them to as "predicative adjectives", and the others to as "attributive adjectives".
 The result of conversion from clause to Verb can also be Verb.
 
-The Mod type, abbreviation for the Modifier type, refers to attributive adjectives, adverbs, and even the qualities nouns and verbs have.
-For example, one Mod can be used to pluralize nouns, while another Mod can be used to mark perfect tenses on verbs.
-The result of conversion from clause to Mod can also be Mod. -}
+The Modf type refers to attributive adjectives, adverbs, and even the qualities nouns and verbs have.
+For example, one Modf can be used to pluralize nouns, while another Modf can be used to mark perfect tenses on verbs.
+The result of conversion from clause to Modf can also be Modf. -}
 
 data Noun = Noun String | NConvert String Phrase deriving (Show)
 
 data Verb = Verb String | VConvert String Phrase deriving (Show)
 
-data Mod = Mod String | MConvert String Phrase deriving (Show)
+data Modf = Modf String | MConvert String Phrase deriving (Show)
 
 {- The Phrase type refers to the structural characteristic of words.
-The Noun, Verb, and Mod types above are parts of speech, or POSs. The Phrase type takes those POSs into the syntactic area of sentence.
+The Noun, Verb, and Modf types above are parts of speech, or POSs. The Phrase type takes those POSs into the syntactic area of sentence.
 NWord, VWord, and MWord can be seem as a "converter" from POS to the 'leaf' of syntax tree.
 Add is the 'branch' of syntax tree, and mostly seem as applying the second phrase to the first phrase.
 In this language, the type of phrase is determined by the first leaf it has, because the language is very strictly head-initial.
@@ -32,129 +30,19 @@ However, implementing Join is important, because sentences with intransitive ver
 data Phrase
   = NWord Noun
   | VWord Verb
-  | MWord Mod
+  | MWord Modf
   | Add Phrase Phrase
   | Join Phrase Phrase
   deriving (Show)
 
 -- Aliases
 
-infixr 1 +>
-infixr 2 +>>
-infixr 3 +>>>
-infixr 4 +>>>>
-infixr 5 +>>>>>
-infixr 6 +>>>>>>
-infixr 7 +>>>>>>>
-infixr 8 +>>>>>>>>
-infixr 9 +>>>>>>>>>
-infixl 1 <+
-infixl 2 <<+
-infixl 3 <<<+
-infixl 4 <<<<+
-infixl 5 <<<<<+
-infixl 6 <<<<<<+
-infixl 7 <<<<<<<+
-infixl 8 <<<<<<<<+
-infixl 9 <<<<<<<<<+
-infixr 1 <+>
-infixr 2 <+>>
-infixr 3 <+>>>
-infixr 4 <+>>>>
-infixr 5 <+>>>>>
-infixr 6 <+>>>>>>
-infixr 7 <+>>>>>>>
-infixr 8 <+>>>>>>>>
-infixr 9 <+>>>>>>>>>
-infixl 2 <<+>
-infixl 3 <<<+>
-infixl 4 <<<<+>
-infixl 5 <<<<<+>
-infixl 6 <<<<<<+>
-infixl 7 <<<<<<<+>
-infixl 8 <<<<<<<<+>
-infixl 9 <<<<<<<<<+>
-
-(+>) :: Phrase -> Phrase -> Phrase
-(+>) = Add
-(+>>) :: Phrase -> Phrase -> Phrase
-(+>>) = Add
-(+>>>) :: Phrase -> Phrase -> Phrase
-(+>>>) = Add
-(+>>>>) :: Phrase -> Phrase -> Phrase
-(+>>>>) = Add
-(+>>>>>) :: Phrase -> Phrase -> Phrase
-(+>>>>>) = Add
-(+>>>>>>) :: Phrase -> Phrase -> Phrase
-(+>>>>>>) = Add
-(+>>>>>>>) :: Phrase -> Phrase -> Phrase
-(+>>>>>>>) = Add
-(+>>>>>>>>) :: Phrase -> Phrase -> Phrase
-(+>>>>>>>>) = Add
-(+>>>>>>>>>) :: Phrase -> Phrase -> Phrase
-(+>>>>>>>>>) = Add
-
-(<+) :: Phrase -> Phrase -> Phrase
-(<+) = Add
-(<<+) :: Phrase -> Phrase -> Phrase
-(<<+) = Add
-(<<<+) :: Phrase -> Phrase -> Phrase
-(<<<+) = Add
-(<<<<+) :: Phrase -> Phrase -> Phrase
-(<<<<+) = Add
-(<<<<<+) :: Phrase -> Phrase -> Phrase
-(<<<<<+) = Add
-(<<<<<<+) :: Phrase -> Phrase -> Phrase
-(<<<<<<+) = Add
-(<<<<<<<+) :: Phrase -> Phrase -> Phrase
-(<<<<<<<+) = Add
-(<<<<<<<<+) :: Phrase -> Phrase -> Phrase
-(<<<<<<<<+) = Add
-(<<<<<<<<<+) :: Phrase -> Phrase -> Phrase
-(<<<<<<<<<+) = Add
-
-(<+>) :: Phrase -> Phrase -> Phrase
-(<+>) = Join
-(<+>>) :: Phrase -> Phrase -> Phrase
-(<+>>) = Join
-(<+>>>) :: Phrase -> Phrase -> Phrase
-(<+>>>) = Join
-(<+>>>>) :: Phrase -> Phrase -> Phrase
-(<+>>>>) = Join
-(<+>>>>>) :: Phrase -> Phrase -> Phrase
-(<+>>>>>) = Join
-(<+>>>>>>) :: Phrase -> Phrase -> Phrase
-(<+>>>>>>) = Join
-(<+>>>>>>>) :: Phrase -> Phrase -> Phrase
-(<+>>>>>>>) = Join
-(<+>>>>>>>>) :: Phrase -> Phrase -> Phrase
-(<+>>>>>>>>) = Join
-(<+>>>>>>>>>) :: Phrase -> Phrase -> Phrase
-(<+>>>>>>>>>) = Join
-
-(<<+>) :: Phrase -> Phrase -> Phrase
-(<<+>) = Join
-(<<<+>) :: Phrase -> Phrase -> Phrase
-(<<<+>) = Join
-(<<<<+>) :: Phrase -> Phrase -> Phrase
-(<<<<+>) = Join
-(<<<<<+>) :: Phrase -> Phrase -> Phrase
-(<<<<<+>) = Join
-(<<<<<<+>) :: Phrase -> Phrase -> Phrase
-(<<<<<<+>) = Join
-(<<<<<<<+>) :: Phrase -> Phrase -> Phrase
-(<<<<<<<+>) = Join
-(<<<<<<<<+>) :: Phrase -> Phrase -> Phrase
-(<<<<<<<<+>) = Join
-(<<<<<<<<<+>) :: Phrase -> Phrase -> Phrase
-(<<<<<<<<<+>) = Join
-
 noun :: String -> Phrase
 noun = NWord . Noun
 verb :: String -> Phrase
 verb = VWord . Verb
-mod :: String -> Phrase
-mod = MWord . Mod
+modf :: String -> Phrase
+modf = MWord . Modf
 
 nconv :: String -> Phrase -> Phrase
 nconv x = NWord . NConvert x
