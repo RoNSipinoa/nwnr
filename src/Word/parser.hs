@@ -1,6 +1,8 @@
+module Word.Parser where
+
 import Text.Printf ( printf )
-import Prelude hiding (mod)
-import Word.Base
+import Prelude hiding ( (<*), (*>) )
+import Word.Base 
 import Word.Lexicon
 
 data Tree a = Branch String (Tree a) (Tree a) | Leaf a
@@ -15,7 +17,7 @@ instance (Show a) => Show (Tree a) where
 phraseType :: Phrase -> String
 phraseType (NWord x) = "Noun"
 phraseType (VWord x) = "Verb"
-phraseType (MWord x) = "Mod"
+phraseType (MWord x) = "Modf"
 phraseType (Add x y) = phraseType x
 phraseType (Join x y) = "Sentence"
 
@@ -25,7 +27,8 @@ parse (NWord (NConvert x y)) = Branch "NConvert" (Leaf . NWord $ Noun x) (parse 
 parse (NWord x) = Leaf (NWord x)
 parse (VWord (VConvert x y)) = Branch "VConvert" (Leaf . VWord $ Verb x) (parse y)
 parse (VWord x) = Leaf (VWord x)
-parse (MWord (MConvert x y)) = Branch "MConvert" (Leaf . MWord $ Mod x) (parse y)
+parse (MWord (MConvert x y)) = Branch "MConvert" (Leaf . MWord $ Modf x) (parse y)
 parse (MWord x) = Leaf (MWord x)
 parse (Add x y) = Branch (phraseType x) (parse x) (parse y)
 parse (Join x y) = Branch "Sentence" (parse x) (parse y)
+
