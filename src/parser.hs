@@ -2,8 +2,8 @@ module Word.Parser where
 
 import Text.Printf ( printf )
 import Prelude hiding ( (<*), (*>) )
-import Word.Base 
-import Word.Lexicon
+import Base 
+import Lexicon
 
 data Tree a = Branch String (Tree a) (Tree a) | Leaf a
 

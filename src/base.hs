@@ -1,4 +1,4 @@
-module Word.Base where
+module Base where
 
 {- The Noun type refers to nouns, pronouns, and numerals.
 The result of conversion from clause to Noun can also be Noun.
