@@ -1,22 +1,19 @@
 module Base where
 
 {- The Noun type refers to nouns, pronouns, and numerals.
-The result of conversion from clause to Noun can also be Noun.
 
 The Verb type refers to verbs and so-called "adjectives".
 Note that the adjective here is not that in English, but rather that in Korean. Think "be happy" or "be angry" acting like a verb.
 I will refer them to as "predicative adjectives", and the others to as "attributive adjectives".
-The result of conversion from clause to Verb can also be Verb.
 
 The Modf type refers to attributive adjectives, adverbs, and even the qualities nouns and verbs have.
-For example, one Modf can be used to pluralize nouns, while another Modf can be used to mark perfect tenses on verbs.
-The result of conversion from clause to Modf can also be Modf. -}
+For example, one Modf can be used to pluralize nouns, while another Modf can be used to mark perfect tenses on verbs.-}
 
-data Noun = Noun String | NConvert String Phrase deriving (Show)
+data Noun = Noun String deriving (Show)
 
-data Verb = Verb String | VConvert String Phrase deriving (Show)
+data Verb = Verb String deriving (Show)
 
-data Modf = Modf String | MConvert String Phrase deriving (Show)
+data Modf = Modf String deriving (Show)
 
 {- The Phrase type refers to the structural characteristic of words.
 The Noun, Verb, and Modf types above are parts of speech, or POSs. The Phrase type takes those POSs into the syntactic area of sentence.
