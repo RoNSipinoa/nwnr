@@ -9,11 +9,11 @@ I will refer them to as "predicative adjectives", and the others to as "attribut
 The Modf type refers to attributive adjectives, adverbs, and even the qualities nouns and verbs have.
 For example, one Modf can be used to pluralize nouns, while another Modf can be used to mark perfect tenses on verbs.-}
 
-data Noun = Noun String deriving (Show)
+newtype Noun = Noun String deriving (Show, Eq)
 
-data Verb = Verb String deriving (Show)
+newtype Verb = Verb String deriving (Show, Eq)
 
-data Modf = Modf String deriving (Show)
+newtype Modf = Modf String deriving (Show, Eq)
 
 {- The Phrase type refers to the structural characteristic of words.
 The Noun, Verb, and Modf types above are parts of speech, or POSs. The Phrase type takes those POSs into the syntactic area of sentence.
@@ -30,7 +30,7 @@ data Phrase
   | MWord Modf
   | Add Phrase Phrase
   | Join Phrase Phrase
-  deriving (Show)
+  deriving (Show, Eq)
 
 -- Aliases
 
@@ -40,10 +40,3 @@ verb :: String -> Phrase
 verb = VWord . Verb
 modf :: String -> Phrase
 modf = MWord . Modf
-
-nconv :: String -> Phrase -> Phrase
-nconv x = NWord . NConvert x
-vconv :: String -> Phrase -> Phrase
-vconv x = VWord . VConvert x
-mconv :: String -> Phrase -> Phrase
-mconv x = MWord . MConvert x
