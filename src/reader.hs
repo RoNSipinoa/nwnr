@@ -9,8 +9,6 @@ data StackElem = StackPhrase Phrase | StackOp (Phrase -> Phrase -> Phrase)
 
 type Stack = [StackElem]
 
-kpnc = lookupWord "kpnc"
-
 isPhrase :: StackElem -> Bool
 isPhrase (StackPhrase _) = True
 isPhrase _ = False

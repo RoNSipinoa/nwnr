@@ -1,3 +1,6 @@
 module Main where
 
-main = putStrLn "Hello World!"
+import Reader
+
+main :: IO ()
+main = print $ showPhrase "tszw ifvu klbz snic mt mt bsal ocrl slys mt mt lpkq cd mt mt axdv cd"

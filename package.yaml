@@ -26,6 +26,7 @@ dependencies:
 
 library:
   source-dirs: src
+  exposed-modules: Base Lexicon Parser Reader
 
 executables:
   SComCon-H-exe:
