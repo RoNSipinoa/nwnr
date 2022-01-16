@@ -2,8 +2,7 @@ module Parser where
 
 import Text.Printf ( printf )
 import Prelude hiding ( (<*), (*>) )
-import Base 
-import Lexicon
+import Base
 
 data Tree a = Branch String (Tree a) (Tree a) | Leaf a
 
@@ -20,7 +19,6 @@ phraseType (VWord x) = "Verb"
 phraseType (MWord x) = "Modf"
 phraseType (Add x y) = phraseType x
 phraseType (Join x y) = "Sentence"
-
 
 parse :: Phrase -> Tree Phrase
 parse (NWord x) = Leaf (NWord x)
