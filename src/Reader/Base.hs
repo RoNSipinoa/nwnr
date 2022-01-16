@@ -1,32 +1,43 @@
-module Reader.Base (
-  StackElem (..),
-  Stack,
-  stack2Phrase,
-  read2Stack,
-  showPhrase
-) where
+module Reader.Base
+  ( StackElem (..),
+    Stack,
+    stack2Phrase,
+    read2Stack,
+    showPhrase,
+  )
+where
 
 import Base
-import Lexicon.Word
-import Lexicon.Function
-import Parser
 import Data.Maybe
+import Lexicon.Function
+import Lexicon.Word
+import Parser
 
 data StackElem = StackPhrase Phrase | StackReference String | StackOp (Phrase -> Phrase -> Phrase) | StackSubOp
 
 instance Show StackElem where
-    show (StackPhrase x) = "StackPhrase " ++ show x
-    show (StackReference x) = "StackReference " ++ show x
-    show (StackOp x) = if x bott bott == Add bott bott then "StackOp Add" else "StackOp Join"
-    show StackSubOp = "StackSubOp"
-  
+  show (StackPhrase x) = "StackPhrase " ++ show x
+  show (StackReference x) = "StackReference " ++ show x
+  show (StackOp x) = if x bott bott == Add bott bott then "StackOp Add" else "StackOp Join"
+  show StackSubOp = "StackSubOp"
+
 instance Eq StackElem where
-  StackPhrase x == StackPhrase y  = x == y
+  StackPhrase x == StackPhrase y = x == y
   StackReference x == StackReference y = x == y
   StackOp x == StackOp y = x bott bott == y bott bott
   StackSubOp == StackSubOp = True
-  _ == _ = False 
-  
+  _ == _ = False
+
+instance Read StackElem where
+  readsPrec _ "StackOp Add" = [(StackOp Add, "")]
+  readsPrec _ "StackOp Join" = [(StackOp Join, "")]
+  readsPrec _ "StackSubOp" = [(StackSubOp, "")]
+  readsPrec _ input
+    | "StackPhrase" `elem` inputList = [(StackPhrase (lookupWord $ last inputList), "")]
+    | "StackReference" `elem` inputList = [(StackReference (last inputList), "")]
+    | otherwise = [(StackPhrase kpnc, input)]
+      where inputList = words input
+
 type Stack = [StackElem]
 
 isPhrase :: StackElem -> Bool
@@ -51,22 +62,27 @@ stack2Phrase xs = let result = foldr stackProcess [] xs in if length result /= 1
 stackProcess :: StackElem -> [Phrase] -> [Phrase]
 stackProcess x stack
   | kpnc `elem` stack = [kpnc, kpnc]
-  | isPhrase x    = toPhrase x:stack
-  | isOp x        = if length stack >= 2 then let b:a:xs = stack in toOp x a b:xs else [kpnc, kpnc]  
-  | otherwise     = [kpnc, kpnc] -- if there is only one kpnc, the output will be Just kpnc, which is not a desirable result
+  | isPhrase x = toPhrase x : stack
+  | isOp x = if length stack >= 2 then let b : a : xs = stack in toOp x a b : xs else [kpnc, kpnc]
+  | otherwise = [kpnc, kpnc] -- if there is only one kpnc, the output will be Just kpnc, which is not a desirable result
 
 read2Stack :: String -> Stack
 read2Stack x = foldl toStackElem [] (words x)
 
 toStackElem :: Stack -> String -> Stack
 toStackElem stack x
-  | l == 2        = if x `elem` addList then StackOp Add:stack else 
-                    if x `elem` joinList then StackOp Join:stack else 
-                    if x `elem` subList then StackSubOp:stack else StackPhrase kpnc:stack
-  | l == 4        = StackPhrase (lookupWord x):stack
-  | l == 8        = StackReference x:stack
-  | otherwise     = StackPhrase kpnc:stack
-    where l = length x
+  | l == 2 =
+    if x `elem` addList
+      then StackOp Add : stack
+      else
+        if x `elem` joinList
+          then StackOp Join : stack
+          else if x `elem` subList then StackSubOp : stack else StackPhrase kpnc : stack
+  | l == 4 = StackPhrase kpnc: stack
+  | l == 8 = StackReference x : stack
+  | otherwise = StackPhrase kpnc : stack
+  where
+    l = length x
 
 showPhrase :: String -> Tree Phrase
 showPhrase = parse . fromJust . stack2Phrase . read2Stack
