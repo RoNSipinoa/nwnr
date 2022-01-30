@@ -14,11 +14,11 @@ wordGen :: [String]
 wordGen = groupBy4 $ take 1024 $ randomRs ('a', 'z') standardGen
 
 -- interchangeable operation strings when being read
-addList :: [[Char]]
+addList :: [String]
 addList = ["mt", "xb", "nw", "ty", "zk", "uv", "qp"]
 
-joinList :: [[Char]]
+joinList :: [String]
 joinList = ["cd", "xm", "kv"]
 
-subList :: [[Char]]
+subList :: [String]
 subList = ["ae", "lw"]

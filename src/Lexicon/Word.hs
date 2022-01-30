@@ -1,49 +1,21 @@
 module Lexicon.Word where
 
 import Base
-import qualified Data.Map as M
 import Data.Maybe
 
 -- word list, just for testing and debugging
-gzvu = verb "like"
-
-zkjn = noun "Python"
-
-fyeg = noun "Andrew"
-
-gawy = verb "think"
-
-bott = noun "I"
-
-zqyq = noun "that"
-
-ktzx = verb "catch"
-
-tiwv = noun "he"
-
-awyi = modf "PST"
-
-bbqc = modf "after"
-
-klmd = verb "run"
-
-fzmf = modf "of"
-
 axdv = noun "an expletive for completing the relative phrase that misses a noun"
-
 ovyn = verb "an expletive for completing the relative phrase that misses a verb"
-
 snic = modf "an expletive for completing the relative phrase that misses a modf"
-
-kpnc = noun "the sentence containing this word is considered an error"
+kpnc = noun "sentence containing this word is considered an error"
+dtgp = noun "multi-function words used for function equality, phrase dividing, etc."
 
 lookupWord :: String -> Phrase
-lookupWord x = fromMaybe kpnc (M.lookup x wordList)
+lookupWord x = fromMaybe kpnc (lookup x wordList)
 
 --word list (actual)
-wordList :: M.Map String Phrase
+wordList :: [(String, Phrase)]
 wordList =
-  M.fromList
     [ ("axdv", noun "I, me"),
       ("ovyn", noun "you"),
       ("snic", noun "this"),

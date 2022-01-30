@@ -23,6 +23,7 @@ dependencies:
 - base >= 4.7 && < 5
 - random
 - containers
+- split
 
 library:
   source-dirs: src
@@ -38,6 +39,9 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - SComCon-H
+    when:
+      - condition: false
+        other-modules: Paths_SComCon_H
 
 tests:
   SComCon-H-test:
