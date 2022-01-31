@@ -1,18 +1,5 @@
 module Lexicon.Function where
 
-import System.Random
-
--- functions for generating words randomly
-groupBy4 :: [a] -> [[a]]
-groupBy4 [] = []
-groupBy4 xs = take 4 xs : groupBy4 (drop 4 xs)
-
-standardGen :: StdGen
-standardGen = mkStdGen 128
-
-wordGen :: [String]
-wordGen = groupBy4 $ take 1024 $ randomRs ('a', 'z') standardGen
-
 -- interchangeable operation strings when being read
 addList :: [String]
 addList = ["mt", "xb", "nw", "ty", "zk", "uv", "qp"]
@@ -22,3 +9,15 @@ joinList = ["cd", "xm", "kv"]
 
 subList :: [String]
 subList = ["ae", "lw"]
+
+swapList :: [String]
+swapList = ["gd"]
+
+dupList :: [String]
+dupList = ["ef"]
+
+overList :: [String]
+overList = ["qn"]
+
+rotList :: [String]
+rotList = ["cq"]

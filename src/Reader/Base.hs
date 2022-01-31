@@ -5,8 +5,7 @@ module Reader.Base
     isOp,
     isReference,
     stack2Phrase,
-    read2Stack,
-    showPhrase,
+    read2Stack
   )
 where
 
@@ -16,30 +15,29 @@ import Lexicon.Function
 import Lexicon.Word
 import Parser
 
-data StackElem = StackPhrase Phrase | StackReference String | StackOp (Phrase -> Phrase -> Phrase) | StackSubOp
+data StackElem = StackPhrase Phrase | StackReference String | StackOp (Phrase -> Phrase -> Phrase) | StackSubOp |
+                 StackSwapOp | StackDupOp | StackOverOp | StackRotOp
 
 instance Show StackElem where
   show (StackPhrase x) = "StackPhrase (" ++ show x ++ ")"
   show (StackReference x) = "StackReference " ++ show x
   show (StackOp x) = if x dtgp dtgp == Add dtgp dtgp then "StackOp Add" else "StackOp Join"
   show StackSubOp = "StackSubOp"
+  show StackSwapOp = "StackSwapOp"
+  show StackDupOp = "StackDupOp"
+  show StackOverOp = "StackOverOp"
+  show StackRotOp = "StackRotOp"
 
 instance Eq StackElem where
   StackPhrase x == StackPhrase y = x == y
   StackReference x == StackReference y = x == y
   StackOp x == StackOp y = x dtgp dtgp == y dtgp dtgp
   StackSubOp == StackSubOp = True
+  StackSwapOp == StackSwapOp = True
+  StackDupOp == StackDupOp  = True
+  StackOverOp == StackOverOp = True
+  StackRotOp == StackRotOp = True
   _ == _ = False
-
-instance Read StackElem where
-  readsPrec _ "StackOp Add" = [(StackOp Add, "")]
-  readsPrec _ "StackOp Join" = [(StackOp Join, "")]
-  readsPrec _ "StackSubOp" = [(StackSubOp, "")]
-  readsPrec _ input
-    | "StackPhrase" `elem` inputList = [(StackPhrase (lookupWord $ last inputList), "")]
-    | "StackReference" `elem` inputList = [(StackReference (last inputList), "")]
-    | otherwise = [(StackPhrase kpnc, input)]
-      where inputList = words input
 
 type Stack = [StackElem]
 
@@ -91,6 +89,3 @@ whatOp x
   | x `elem` joinList = StackOp Join
   | x `elem` subList = StackSubOp
   | otherwise = StackPhrase kpnc
-
-showPhrase :: String -> Tree Phrase
-showPhrase = parse . fromJust . stack2Phrase . read2Stack
