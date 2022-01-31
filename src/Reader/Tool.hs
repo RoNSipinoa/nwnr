@@ -1,21 +1,21 @@
 module Reader.Tool where
 
-import Base
-import Data.List
-import Data.Maybe
 import Data.List.Split
-import Lexicon.Word
-import Lexicon.Function
+import Data.Maybe
 import Reader.Base
 
 referenceBreak :: Stack -> [Stack]
-referenceBreak = concatMap (split (dropBlanks. keepDelimsL $ whenElt (==StackSubOp))) . split (dropBlanks . keepDelimsR $ whenElt isReference)
+referenceBreak = concatMap (split (dropInitBlank . dropFinalBlank . keepDelimsL $ whenElt (== StackSubOp))) . 
+                            split (dropInitBlank . dropFinalBlank . keepDelimsR $ whenElt isReference)
 
 readReferenceStack :: Stack -> (StackElem, Stack)
 readReferenceStack xs = (last xs, tail $ init xs)
 
-solveReference :: Stack -> [(StackElem, Stack)]
-solveReference = map readReferenceStack . filter (\xs -> head xs == StackSubOp && isReference (last xs)). referenceBreak
+makeReferenceTable :: Stack -> [(StackElem, Stack)]
+makeReferenceTable = map readReferenceStack . filter (\xs -> head xs == StackSubOp && isReference (last xs)) . referenceBreak
 
 deleteReference :: Stack -> Stack
-deleteReference = concat . filter (\xs -> head xs /= StackSubOp || (not . isReference . last) xs). referenceBreak
+deleteReference = concat . filter (\xs -> head xs /= StackSubOp || (not . isReference . last) xs) . referenceBreak
+
+solveReference :: Stack -> Stack
+solveReference xs = concatMap (\x -> fromMaybe [x] $ lookup x (makeReferenceTable xs)) (deleteReference xs)

@@ -27,7 +27,6 @@ dependencies:
 
 library:
   source-dirs: src
-  exposed-modules: Reader.Base
 
 executables:
   SComCon-H-exe:

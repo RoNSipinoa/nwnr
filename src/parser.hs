@@ -1,8 +1,11 @@
-module Parser where
+module Parser
+  ( Tree (..),
+    parse,
+  )
+where
 
-import Text.Printf ( printf )
-import Prelude hiding ( (<*), (*>) )
 import Base
+import Text.Printf (printf)
 
 data Tree a = Branch String (Tree a) (Tree a) | Leaf a
 
