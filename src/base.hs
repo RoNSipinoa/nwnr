@@ -31,12 +31,3 @@ data Phrase
   | Add Phrase Phrase
   | Join Phrase Phrase
   deriving (Show, Eq, Read)
-
--- Aliases
-
-noun :: String -> Phrase
-noun = NWord . Noun
-verb :: String -> Phrase
-verb = VWord . Verb
-modf :: String -> Phrase
-modf = MWord . Modf
