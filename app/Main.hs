@@ -8,7 +8,7 @@ import Reader.Tool
 import Base
 
 readString :: String -> Tree Phrase
-readString = parse . fromJust . stack2Phrase . solveReference . read2Stack
+readString = parse . fromJust . stack2Phrase . solveReference . string2Stack
 
 main :: IO ()
 main = print $ readString "hxgg elnaring mvgr diua mt lw halaring mvgr cwny mt lw elnaring mt halaring cd"

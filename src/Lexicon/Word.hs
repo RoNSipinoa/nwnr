@@ -2,6 +2,7 @@ module Lexicon.Word where
 
 import Base
 import Data.Maybe
+import Data.Tuple
 
 noun :: String -> Phrase
 noun = NWord . Noun
@@ -16,6 +17,10 @@ dtgp = noun "multi-function words used for function equality, phrase dividing, e
 
 lookupWord :: String -> Phrase
 lookupWord x = fromMaybe kpnc (lookup x wordList)
+
+lookupDef :: Phrase -> String
+lookupDef x = fromMaybe "kpnc" (lookup x $ map swap wordList)
+
 
 --word list (actual)
 wordList :: [(String, Phrase)]

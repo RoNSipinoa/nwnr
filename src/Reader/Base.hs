@@ -2,10 +2,13 @@ module Reader.Base
   ( StackElem (..),
     Stack,
     isPhrase,
+    toPhrase,
     isOp,
+    toOp,
     isReference,
+    toReference,
     stack2Phrase,
-    read2Stack
+    string2Stack
   )
 where
 
@@ -61,6 +64,10 @@ isReference :: StackElem -> Bool
 isReference (StackReference _) = True
 isReference _ = False
 
+toReference :: StackElem -> String
+toReference (StackReference x) = x
+toReference _ = ""
+
 stack2Phrase :: Stack -> Maybe Phrase
 stack2Phrase xs = let result = foldr stackProcess [] xs in if length result /= 1 then Nothing else Just $ head result
 
@@ -71,20 +78,20 @@ stackProcess x stack
   | isOp x = if length stack >= 2 then let b : a : xs = stack in toOp x a b : xs else [kpnc, kpnc]
   | otherwise = [kpnc, kpnc] -- if there is only one kpnc, the output will be Just kpnc, which is not a desirable result
 
-read2Stack :: String -> Stack
-read2Stack x = foldl toStackElem [] (words x)
+string2Stack :: String -> Stack
+string2Stack x = foldl toStackElem [] (words x)
 
 toStackElem :: Stack -> String -> Stack
 toStackElem stack x
-  | l == 2 = whatOp x : stack
+  | l == 2 = toStackOp x : stack
   | l == 4 = StackPhrase (lookupWord x) : stack
   | l == 8 = StackReference x : stack
   | otherwise = StackPhrase kpnc : stack
   where
     l = length x
 
-whatOp :: String -> StackElem
-whatOp x
+toStackOp :: String -> StackElem
+toStackOp x
   | x `elem` addList = StackOp Add
   | x `elem` joinList = StackOp Join
   | x `elem` subList = StackSubOp
