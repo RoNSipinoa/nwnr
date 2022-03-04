@@ -1,6 +1,8 @@
 module Main where
 
 import Data.Maybe
+import Data.List
+import System.Environment
 
 import Parser
 import Reader.Base
@@ -11,4 +13,6 @@ readString :: String -> Tree Phrase
 readString = parse . fromJust . stack2Phrase . solveReference . string2Stack
 
 main :: IO ()
-main = print $ readString "hxgg elnaring mvgr diua mt lw halaring mvgr cwny mt lw elnaring mt halaring cd"
+main = do 
+    args <- getArgs
+    print $ readString (intercalate " " args)

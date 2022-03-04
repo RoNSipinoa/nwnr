@@ -34,4 +34,5 @@ wordList = [
   ("mvgr", noun "person, human"),
   ("diua", modf "good, nice"),
   ("cwny", modf "young, new"),
-  ("hxgg", verb "to be")]
+  ("hxgg", verb "to be"),
+  ("bmhf", noun "machine, tool")]
