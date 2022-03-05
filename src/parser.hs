@@ -5,23 +5,23 @@ module Parser
 where
 
 import Base
+import Data.Tree hiding (Tree)
 import Text.Printf (printf)
 
 data Tree a = Branch String (Tree a) (Tree a) | Leaf a
 
 instance (Show a) => Show (Tree a) where
-  show = showAtLevel 0
-    where
-      showAtLevel l (Leaf x) = addSpace l ++ show x
-      showAtLevel l (Branch x lt rt) = printf "%s%s\n%s\n%s" (addSpace l) x (showAtLevel (l + 1) lt) (showAtLevel (l + 1) rt)
-      addSpace = flip replicate '\t'
+  show x = drawTree $ toTree x
+    where toTree (Leaf a) = Node (show a) []
+          toTree (Branch a tree1 tree2) = Node a [toTree tree1, toTree tree2]
+
 
 phraseType :: Phrase -> String
-phraseType (NWord x) = "Noun"
-phraseType (VWord x) = "Verb"
-phraseType (MWord x) = "Modf"
-phraseType (Add x y) = phraseType x
-phraseType (Join x y) = "Sentence"
+phraseType (NWord _) = "Noun"
+phraseType (VWord _) = "Verb"
+phraseType (MWord _) = "Modf"
+phraseType (Add x _) = phraseType x
+phraseType (Join _ _) = "Sentence"
 
 parse :: Phrase -> Tree Phrase
 parse (NWord x) = Leaf (NWord x)
