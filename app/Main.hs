@@ -1,18 +1,11 @@
 module Main where
 
-import Data.Maybe
 import Data.List
 import System.Environment
 
-import Parser
-import Reader.Base
-import Reader.Tool
-import Base
-
-readString :: String -> Tree Phrase
-readString = parse . fromJust . stack2Phrase . solveReference . string2Stack
+import Reader
 
 main :: IO ()
-main = do 
+main = do
     args <- getArgs
-    print $ readString (intercalate " " args)
+    print $ processString (unwords args)

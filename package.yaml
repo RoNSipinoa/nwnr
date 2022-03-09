@@ -38,6 +38,7 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - bmhf-nwnr-mt
+    exposed-modules: Reader
     when:
       - condition: false
         other-modules: Paths_bmhf_nwnr_mt
