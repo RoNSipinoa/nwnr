@@ -20,7 +20,6 @@ stackElem2String x gen
   | isReference x = toReference x ++ " "
   | x == StackOp Add = choose addList gen ++ " "
   | x == StackOp Join = choose joinList gen ++ " "
-  | x == StackOverOp = choose overList gen ++ " "
   | otherwise = "kpnc "
     where
         choose xs gen = xs !! fst (randomR (0, length xs - 1) gen)

@@ -8,7 +8,7 @@ module Reader.Base
     isReference,
     toReference,
     stack2Phrase,
-    string2Stack
+    string2Stack,
   )
 where
 
@@ -18,28 +18,26 @@ import Lexicon.Function
 import Lexicon.Word
 import Parser
 
-data StackElem = StackPhrase Phrase | StackReference String | StackOp (Phrase -> Phrase -> Phrase) | StackSubOp |
-                 StackSwapOp | StackDupOp | StackOverOp | StackRotOp
+data StackElem
+  = StackPhrase Phrase
+  | StackReference String
+  | StackOp (Phrase -> Phrase -> Phrase)
+  | StackSubOp
 
 instance Show StackElem where
   show (StackPhrase x) = "StackPhrase (" ++ show x ++ ")"
   show (StackReference x) = "StackReference " ++ show x
-  show (StackOp x) = if x dtgp dtgp == Add dtgp dtgp then "StackOp Add" else "StackOp Join"
+  show (StackOp x)
+    | x dtgp dtgp == Add dtgp dtgp = "StackOp Add"
+    | x dtgp dtgp == Join dtgp dtgp = "StackOp Join"
+    | otherwise = "StackOp Jux"
   show StackSubOp = "StackSubOp"
-  show StackSwapOp = "StackSwapOp"
-  show StackDupOp = "StackDupOp"
-  show StackOverOp = "StackOverOp"
-  show StackRotOp = "StackRotOp"
 
 instance Eq StackElem where
   StackPhrase x == StackPhrase y = x == y
   StackReference x == StackReference y = x == y
   StackOp x == StackOp y = x dtgp dtgp == y dtgp dtgp
   StackSubOp == StackSubOp = True
-  StackSwapOp == StackSwapOp = True
-  StackDupOp == StackDupOp  = True
-  StackOverOp == StackOverOp = True
-  StackRotOp == StackRotOp = True
   _ == _ = False
 
 type Stack = [StackElem]
@@ -83,16 +81,23 @@ string2Stack x = foldl toStackElem [] (words x)
 
 toStackElem :: Stack -> String -> Stack
 toStackElem stack x
-  | l == 2 = toStackOp x : stack
+  | l == 2 = toStackOp x ++ stack
   | l == 4 = StackPhrase (lookupWord x) : stack
   | l == 8 = StackReference x : stack
   | otherwise = StackPhrase kpnc : stack
   where
     l = length x
 
-toStackOp :: String -> StackElem
+toStackOp :: String -> Stack
 toStackOp x
-  | x `elem` addList = StackOp Add
-  | x `elem` joinList = StackOp Join
-  | x `elem` subList = StackSubOp
-  | otherwise = StackPhrase kpnc
+  | x `elem` addList = [StackOp Add]
+  | x `elem` joinList = [StackOp Join]
+  | x `elem` subList = [StackSubOp]
+  | x `elem` juxList = [StackOp Jux]
+  | x `elem` add2List = [StackOp Add, StackOp Add]
+  | x `elem` addJoinList = [StackOp Join, StackOp Add]
+  | x `elem` joinAddList = [StackOp Add, StackOp Join]
+  | x `elem` add3List = [StackOp Add, StackOp Add, StackOp Add]
+  | otherwise = [StackPhrase kpnc]
+
+-- "gafx nwnr bmhf mt mt mvgr jvxb mt cd"

@@ -30,4 +30,5 @@ data Phrase
   | MWord Modf
   | Add Phrase Phrase
   | Join Phrase Phrase
+  | Jux Phrase Phrase
   deriving (Show, Eq, Read)
