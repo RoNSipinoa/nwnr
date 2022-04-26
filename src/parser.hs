@@ -27,10 +27,10 @@ parse (Add x y) = Branch (phraseType x) (parse x) (parse y)
 parse (Join x y) = Branch "Sentence" (parse x) (parse y)
 parse (Jux x y) = Branch ("Jux - " ++ phraseType x) (parse x) (parse y)
 
-validate :: Phrase -> Bool
-validate (NWord _) = True
-validate (VWord _) = True
-validate (MWord _) = True
-validate (Add x y) = validate x && validate y
-validate (Join x y) = (phraseType x == "Verb") && (phraseType y == "Noun" || phraseType y == "Sentence")
-validate (Jux x y) = phraseType x == phraseType y
+syntaxValidate :: Phrase -> Bool
+syntaxValidate (NWord _) = True
+syntaxValidate (VWord _) = True
+syntaxValidate (MWord _) = True
+syntaxValidate (Add x y) = syntaxValidate x && syntaxValidate y
+syntaxValidate (Join x y) = (phraseType x == "Verb" || phraseType x == "Modf") && (phraseType y == "Noun" || phraseType y == "Sentence")
+syntaxValidate (Jux x y) = (phraseType x == phraseType y) && syntaxValidate x && syntaxValidate y
