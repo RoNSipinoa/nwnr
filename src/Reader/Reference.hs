@@ -1,8 +1,9 @@
-module Reader.Tool where
+module Reader.Reference where
 
 import Data.List.Split
 import Data.Maybe
-import Reader.Base
+
+import Reader.Stack
 
 referenceBreak :: Stack -> [Stack]
 referenceBreak = concatMap (split (dropInitBlank . dropFinalBlank . keepDelimsL $ whenElt (== StackSubOp))) . 

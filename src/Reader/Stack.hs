@@ -1,4 +1,4 @@
-module Reader.Base
+module Reader.Stack
   ( StackElem (..),
     Stack,
     isPhrase,
@@ -99,5 +99,3 @@ toStackOp x
   | x `elem` joinAddList = [StackOp Add, StackOp Join]
   | x `elem` add3List = [StackOp Add, StackOp Add, StackOp Add]
   | otherwise = [StackPhrase kpnc]
-
--- "gafx nwnr bmhf mt mt mvgr jvxb mt cd"
